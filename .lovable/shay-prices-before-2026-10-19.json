@@ -1,0 +1,12 @@
+{
+  "source": "Shopify get_product read before approved price-only update",
+  "currency": "ILS",
+  "variants": [
+    {"productId":15439679193309,"variantId":68229468422365,"sku":"JEW1307-1","price":"249"},
+    {"productId":15439679193309,"variantId":68229468455133,"sku":"JEW1307-2","price":"249"},
+    {"productId":15439679193309,"variantId":68229468487901,"sku":"JEW1307-3","price":"249"},
+    {"productId":15439679226077,"variantId":68229468618973,"sku":"JEW1308-1","price":"229"},
+    {"productId":15439679226077,"variantId":68229468651741,"sku":"JEW1308-2","price":"229"},
+    {"productId":15439679226077,"variantId":68229468684509,"sku":"JEW1308-3","price":"229"}
+  ]
+}

@@ -1,0 +1,59 @@
+/* ROYAL SILVER V2 — brand layer on top of Dawn. Colors/fonts come from theme settings; this file adds RTL fixes + custom sections. */
+
+/* ---------- RTL fixes (Dawn has no RTL support out of the box; base CSS was converted to logical properties) ---------- */
+[dir='rtl'] .drawer__inner { transform: translateX(-100%); }
+[dir='rtl'] .drawer.active .drawer__inner { transform: translateX(0); }
+[dir='rtl'] .menu-drawer { transform: translateX(100%); }
+[dir='rtl'] .menu-drawer__submenu { transform: translateX(-100%); }
+[dir='rtl'] .mobile-facets__inner { transform: translateX(100%); }
+[dir='rtl'] .menu-opening .mobile-facets__inner { transform: translateX(0); }
+[dir='rtl'] .js .disclosure-has-popup:not(.menu-opening) .mobile-facets__inner { transform: translateX(-105vw); }
+/* directional arrows */
+[dir='rtl'] .icon-arrow,
+[dir='rtl'] .slider-button .icon,
+[dir='rtl'] .customer .icon-arrow { transform: scaleX(-1); }
+[dir='rtl'] .pagination__item--next .icon { transform: rotate(-90deg); }
+[dir='rtl'] .pagination__item--prev .icon { transform: rotate(90deg); }
+/* Dawn's sliders do scrollLeft arithmetic, which breaks in RTL: keep the scroll container LTR, content RTL. */
+[dir='rtl'] slider-component .slider,
+[dir='rtl'] .slider { direction: ltr; }
+[dir='rtl'] .slider > * { direction: rtl; }
+/* letter-spacing breaks Hebrew letterforms */
+html[lang='he'] *,
+html[dir='rtl'] * { letter-spacing: 0 !important; }
+/* keep prices, SKUs and phone numbers in correct bidi order */
+.price, .price-item, [dir='rtl'] .cart-item__price-wrapper { unicode-bidi: plaintext; }
+
+/* ---------- Brand polish ---------- */
+.header__heading-link { letter-spacing: 0.2em; }
+html[dir='rtl'] .header__heading-link { letter-spacing: 0.2em !important; } /* wordmark is Latin */
+.card__heading { font-weight: 400; }
+.button, .shopify-challenge__button { min-height: 4.8rem; }
+.card-wrapper .card { transition: opacity 0.2s ease; }
+.announcement-bar__message { font-size: 1.3rem; }
+
+/* ---------- royal-category-tiles ---------- */
+.rs-tiles { display: grid; gap: 1.2rem; grid-template-columns: repeat(2, 1fr); }
+.rs-tiles__tile { position: relative; display: block; overflow: hidden; aspect-ratio: 4 / 5; background: rgba(var(--color-foreground), 0.05); color: inherit; text-decoration: none; }
+.rs-tiles__tile img, .rs-tiles__tile svg { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rs-tiles__label { position: absolute; inset-inline: 0; bottom: 0; padding: 1.6rem 1.2rem; background: linear-gradient(to top, rgba(0, 0, 0, 0.45), transparent); color: #fff; }
+.rs-tiles__eyebrow { display: block; font-size: 1.2rem; opacity: 0.85; }
+.rs-tiles__title { font-size: 1.8rem; margin: 0; }
+@media screen and (min-width: 750px) { .rs-tiles { grid-template-columns: repeat(var(--rs-cols, 4), 1fr); } }
+
+/* ---------- royal-trust-strip ---------- */
+.rs-trust { display: grid; gap: 1.6rem; text-align: center; }
+.rs-trust__item { display: flex; flex-direction: column; gap: 0.4rem; }
+.rs-trust__title { font-weight: 600; }
+.rs-trust__text { opacity: 0.75; font-size: 1.4rem; }
+@media screen and (min-width: 750px) { .rs-trust { grid-template-columns: repeat(var(--rs-cols, 3), 1fr); } }
+
+/* ---------- sticky mobile add-to-cart ---------- */
+.rs-sticky-atc { position: fixed; inset-inline: 0; bottom: 0; z-index: 20; display: none; align-items: center; gap: 1.2rem; padding: 1rem 1.5rem calc(1rem + env(safe-area-inset-bottom)); background: rgb(var(--color-background)); border-top: 0.1rem solid rgba(var(--color-foreground), 0.15); transform: translateY(100%); transition: transform 0.25s ease; }
+.rs-sticky-atc.is-visible { transform: translateY(0); }
+.rs-sticky-atc__info { flex: 1; min-width: 0; }
+.rs-sticky-atc__title { display: block; font-size: 1.3rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rs-sticky-atc__price { font-weight: 600; }
+.rs-sticky-atc .button { flex: none; min-width: 16rem; }
+@media screen and (max-width: 749px) { .rs-sticky-atc { display: flex; } }
+@media (prefers-reduced-motion: reduce) { .rs-sticky-atc { transition: none; } }

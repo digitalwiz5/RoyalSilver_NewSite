@@ -1,0 +1,41 @@
+{%- comment -%}
+  Sticky add-to-cart bar (mobile only). It does not add to the cart itself: it clicks the real product-form
+  submit button, so Shopify's own cart/AddToCart events fire exactly once.
+  Params: product, section_id
+{%- endcomment -%}
+{%- assign rs_variant = product.selected_or_first_available_variant -%}
+<div class="rs-sticky-atc" data-rs-sticky data-section="{{ section_id }}" aria-hidden="true">
+  <div class="rs-sticky-atc__info">
+    <span class="rs-sticky-atc__title">{{ product.title | escape }}</span>
+    <span class="rs-sticky-atc__price" data-rs-sticky-price>{{ rs_variant.price | money }}</span>
+  </div>
+  <button type="button" class="button button--primary" data-rs-sticky-button tabindex="-1">
+    {{ 'products.product.add_to_cart' | t }}
+  </button>
+</div>
+<script>
+  (function () {
+    var bar = document.currentScript.previousElementSibling;
+    var id = bar.dataset.section;
+    var submit = document.querySelector('#ProductSubmitButton-' + id);
+    if (!submit || !('IntersectionObserver' in window)) return;
+    var btn = bar.querySelector('[data-rs-sticky-button]');
+    btn.addEventListener('click', function () { if (!submit.disabled) submit.click(); });
+    new IntersectionObserver(function (entries) {
+      var off = !entries[0].isIntersecting && entries[0].boundingClientRect.top < 0;
+      bar.classList.toggle('is-visible', off);
+      bar.setAttribute('aria-hidden', off ? 'false' : 'true');
+      btn.tabIndex = off ? 0 : -1;
+    }).observe(submit);
+    var sync = function () {
+      var label = submit.textContent.trim();
+      if (label) btn.textContent = label;
+      btn.disabled = submit.disabled;
+      var price = document.querySelector('#price-' + id + ' .price-item--last, #price-' + id + ' .price-item--regular');
+      var out = bar.querySelector('[data-rs-sticky-price]');
+      if (price && out) out.textContent = price.textContent.trim();
+    };
+    new MutationObserver(sync).observe(submit.closest('form') || submit, { subtree: true, childList: true, characterData: true, attributes: true });
+    sync();
+  })();
+</script>

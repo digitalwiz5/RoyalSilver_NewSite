@@ -1,0 +1,290 @@
+{
+  "sections": {
+    "hero": {
+      "type": "image-banner",
+      "blocks": {
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "תכשיטים שמספרים סיפור",
+            "heading_size": "h0"
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>עיצובים עדינים, שנבחרו ביד ללבישה יומיומית ולרגעים שנזכרים.</p>",
+            "text_style": "body"
+          }
+        },
+        "b": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "לקולקציה",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "h",
+        "t",
+        "b"
+      ],
+      "settings": {
+        "image_overlay_opacity": 20,
+        "image_height": "large",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-2",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "tiles": {
+      "type": "royal-category-tiles",
+      "blocks": {
+        "tile-0": {
+          "type": "tile",
+          "settings": {
+            "eyebrow": "לנשים",
+            "title": "שרשראות"
+          }
+        },
+        "tile-1": {
+          "type": "tile",
+          "settings": {
+            "eyebrow": "לנשים",
+            "title": "צמידים"
+          }
+        },
+        "tile-2": {
+          "type": "tile",
+          "settings": {
+            "eyebrow": "לנשים",
+            "title": "טבעות"
+          }
+        },
+        "tile-3": {
+          "type": "tile",
+          "settings": {
+            "eyebrow": "לנשים",
+            "title": "עגילים"
+          }
+        },
+        "tile-4": {
+          "type": "tile",
+          "settings": {
+            "eyebrow": "לנשים",
+            "title": "סטים"
+          }
+        },
+        "tile-5": {
+          "type": "tile",
+          "settings": {
+            "eyebrow": "לגברים",
+            "title": "שרשראות"
+          }
+        },
+        "tile-6": {
+          "type": "tile",
+          "settings": {
+            "eyebrow": "לגברים",
+            "title": "צמידים"
+          }
+        }
+      },
+      "block_order": [
+        "tile-0",
+        "tile-1",
+        "tile-2",
+        "tile-3",
+        "tile-4",
+        "tile-5",
+        "tile-6"
+      ],
+      "settings": {
+        "heading": "קניות לפי קטגוריה",
+        "heading_size": "h2",
+        "columns": 4,
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "picks": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "בחירת העורכת",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "all",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "outline",
+        "enable_desktop_slider": false,
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 28,
+        "padding_bottom": 36
+      }
+    },
+    "gift": {
+      "type": "image-with-text",
+      "blocks": {
+        "c": {
+          "type": "caption",
+          "settings": {
+            "caption": "מתנות",
+            "text_style": "uppercase",
+            "text_size": "medium"
+          }
+        },
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "מתנה שמרגישים",
+            "heading_size": "h1"
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>תכשיט עדין הוא מתנה שנשארת. בחרו לפי קטגוריה, או בחרו קולקציית מתנות בעורך.</p>",
+            "text_style": "body"
+          }
+        },
+        "b": {
+          "type": "button",
+          "settings": {
+            "button_label": "לכל התכשיטים",
+            "button_link": "shopify://collections/all",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "c",
+        "h",
+        "t",
+        "b"
+      ],
+      "settings": {
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "scheme-2",
+        "color_scheme": "scheme-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "trust": {
+      "type": "royal-trust-strip",
+      "blocks": {
+        "a": {
+          "type": "item",
+          "settings": {
+            "title": "משלוח עד הבית",
+            "text": "לכל הארץ"
+          }
+        },
+        "b": {
+          "type": "item",
+          "settings": {
+            "title": "החזרות עד 14 יום",
+            "text": "בכפוף למדיניות ההחזרות"
+          }
+        },
+        "c": {
+          "type": "item",
+          "settings": {
+            "title": "שירות אישי",
+            "text": "טלפון, מייל ווואטסאפ"
+          }
+        }
+      },
+      "block_order": [
+        "a",
+        "b",
+        "c"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "story": {
+      "type": "rich-text",
+      "blocks": {
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "הסיפור שלנו",
+            "heading_size": "h1"
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Royal Silver נולדה מהאמונה שתכשיט טוב הוא כזה שנהיה חלק מהיום-יום. אנחנו בוחרים בקפידה עיצובים על-זמניים, כדי שכל פריט ילווה רגעים משמעותיים.</p>"
+          }
+        },
+        "b": {
+          "type": "button",
+          "settings": {
+            "button_label": "עוד עלינו",
+            "button_link": "",
+            "button_style_secondary": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "h",
+        "t",
+        "b"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-2",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "tiles",
+    "picks",
+    "gift",
+    "trust",
+    "story"
+  ]
+}
