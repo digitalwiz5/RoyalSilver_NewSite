@@ -76,7 +76,6 @@ import {
   Sparkles,
   Gem,
   Gift,
-  Lock,
   Droplets,
   Shell,
 
@@ -872,8 +871,7 @@ function ProductPage() {
             : []),
 
     ...(isShay ? [{ icon: Gift, label: "מתנה קטנה עם הרבה משמעות" }] : []),
-    { icon: Truck, label: isHomeOnly && !isLia ? "משלוח עד הבית • 2–5 ימי עסקים" : "משלוח עד הבית ב־29.90 ₪" },
-    { icon: Lock, label: "תשלום מאובטח" },
+    // Shipping and secure-payment reassurance lives once, next to the price note and under the add-to-cart button.
   ];
 
   const faq: { q: string; a: string }[] = [
@@ -1121,15 +1119,14 @@ function ProductPage() {
             </p>
 
             {/* TRUST BADGES */}
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-10 text-[13px] tracking-wide text-foreground/80">
+            {trustBadges.length > 0 && <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-10 text-[13px] tracking-wide text-foreground/80">
               {trustBadges.map((b) => (
                 <li key={b.label} className="flex items-center gap-2.5">
                   <b.icon aria-hidden className="h-4 w-4 shrink-0 text-foreground/60" strokeWidth={1.5} />
                   <span>{b.label}</span>
                 </li>
               ))}
-            </ul>
-
+            </ul>}
 
             {/* OPTION SELECTORS */}
             {isShay ? <ShaySelectors product={data} selected={selected} onChange={(selection) => {
