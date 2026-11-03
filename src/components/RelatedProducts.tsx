@@ -37,7 +37,7 @@ export function RelatedProducts({
   return (
     <section className="mt-16 md:mt-24 border-t border-border pt-12 md:pt-16">
       <div className="text-center mb-10">
-        <h2 className="font-serif text-3xl md:text-4xl italic">מוצרים שאתם עשויים לאהוב</h2>
+        <h2 className="font-serif text-3xl md:text-5xl font-light italic">מוצרים שאתם עשויים לאהוב</h2>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
         {items.map((p) => (

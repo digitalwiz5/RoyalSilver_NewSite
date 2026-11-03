@@ -103,7 +103,7 @@ function Home() {
       <Header />
 
       {/* INTRO VIDEO */}
-      <section className="relative w-full h-[65vh] md:h-[75vh] overflow-hidden bg-background">
+      <section className="relative w-full h-[78vh] md:h-[86vh] overflow-hidden bg-secondary">
         <video
           ref={videoRef}
           key={heroVideo.filename}
@@ -115,55 +115,74 @@ function Home() {
           preload="auto"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-background/10" />
-        <div className="relative z-10 h-full flex flex-col items-center justify-end pb-10 text-center px-6">
-          <p className="text-xs tracking-[0.3em] uppercase text-foreground/80 mb-2">Royal Silver</p>
-          <h1 className="font-serif text-4xl md:text-6xl tracking-tight italic text-foreground">
+        <div className="absolute inset-0 bg-gradient-to-t from-background from-15% via-background/75 via-40% to-transparent to-70%" />
+        <div className="relative z-10 h-full flex flex-col items-center justify-end pb-12 md:pb-16 text-center px-6">
+          <p className="rs-eyebrow mb-4 text-foreground/80">Royal Silver</p>
+          <h1 className="font-serif text-5xl md:text-7xl font-light italic leading-[1.05] text-foreground">
             תכשיטים שמספרים סיפור
           </h1>
-          <p className="mt-3 max-w-sm text-sm md:text-base text-foreground/70 leading-relaxed">
+          <span className="rs-rule my-5" aria-hidden="true" />
+          <p className="max-w-md text-sm md:text-base text-foreground/75 leading-relaxed">
             עיצובים עדינים שנבחרים אחד־אחד, לענידה יומיומית ולרגעים שנשארים בזיכרון.
           </p>
-
-          <a
-            href="#collections"
-            className="mt-6 inline-block bg-foreground text-background px-9 py-3.5 text-xs tracking-widest uppercase hover:opacity-90 transition"
-          >
-            לקולקציה
-          </a>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <a href="#collections" className="rs-btn-solid">לקולקציה</a>
+            <Link to="/gifts" className="rs-btn-ghost">מתנות</Link>
+          </div>
         </div>
       </section>
 
+      {/* QUICK CATEGORIES */}
+      <nav aria-label="קניות לפי קטגוריה" className="border-b border-border">
+        <ul className="rs-rail container mx-auto px-6 py-4 flex gap-2 overflow-x-auto md:justify-center whitespace-nowrap">
+          {[
+            ["rings", "טבעות"], ["earrings", "עגילים"], ["necklaces", "שרשראות"], ["bracelets", "צמידים"],
+            ["sets", "סטים"], ["men-necklaces", "שרשראות גברים"], ["men-bracelets", "צמידים גברים"],
+          ].map(([slug, label]) => (
+            <li key={slug}>
+              <Link
+                to="/category/$slug"
+                params={{ slug }}
+                className="inline-flex items-center min-h-11 px-5 border border-border text-sm hover:bg-foreground hover:text-background hover:border-foreground transition-colors duration-300"
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
       {/* COLLECTIONS */}
-      <section id="collections" className="container mx-auto px-6 py-24">
-        <div className="text-center mb-16">
-          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">הקולקציות שלנו</p>
-          <h2 className="font-serif text-4xl md:text-5xl italic">בחרי את הסיפור שלך</h2>
-          <p className="text-sm text-muted-foreground mt-4 max-w-md mx-auto leading-relaxed">
+      <section id="collections" className="container mx-auto px-4 md:px-6 py-20 md:py-28">
+        <div className="text-center mb-12 md:mb-16 rs-reveal">
+          <p className="rs-eyebrow mb-4">הקולקציות שלנו</p>
+          <h2 className="font-serif text-4xl md:text-6xl font-light italic">בחרי את הסיפור שלך</h2>
+          <span className="rs-rule my-6" aria-hidden="true" />
+          <p className="text-sm md:text-base text-muted-foreground max-w-md mx-auto leading-relaxed">
             כל קולקציה נבנתה סביב מצב רוח אחר — מהעדין שבשרשראות ועד הברק של העגילים.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-          {collections.map((c) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+          {collections.map((c, i) => (
             <Link
               key={c.slug}
               to="/category/$slug"
               params={{ slug: c.slug }}
-              className="relative aspect-[4/5] overflow-hidden group block"
+              className={`rs-tile rs-reveal relative overflow-hidden group block ${
+                i === 0 ? "col-span-2 aspect-[5/4] md:aspect-auto md:row-span-2" : "aspect-[4/5]"
+              }`}
             >
               <img
                 src={c.src}
                 alt={c.title}
                 loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent" />
-              <div className="absolute bottom-8 right-8 text-background">
-                <h3 className="font-serif text-3xl italic">{c.title}</h3>
-                <p className="text-xs tracking-widest uppercase mt-2 border-b border-background pb-1 inline-block">
-                  צפי בקולקציה
-                </p>
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/55 via-foreground/5 to-transparent" />
+              <div className="absolute bottom-5 right-5 md:bottom-8 md:right-8 text-background">
+                <h3 className={`font-serif font-light italic ${i === 0 ? "text-3xl md:text-5xl" : "text-xl md:text-3xl"}`}>{c.title}</h3>
+                <span className="rs-link text-[0.6875rem] tracking-[0.22em] uppercase mt-2 md:mt-3">צפי בקולקציה</span>
               </div>
             </Link>
           ))}
@@ -182,8 +201,8 @@ function Home() {
             />
           </div>
           <div>
-            <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">הקולקציות שלנו</p>
-            <h2 className="font-serif text-4xl md:text-5xl italic mb-8">תכשיטי גברים</h2>
+            <p className="rs-eyebrow mb-4">הקולקציות שלנו</p>
+            <h2 className="font-serif text-4xl md:text-6xl font-light italic mb-8">תכשיטי גברים</h2>
             <nav aria-label="קטגוריות תכשיטי גברים" className="border-t border-border">
               {menCollections.map((collection) => (
                 <Link
@@ -201,13 +220,45 @@ function Home() {
         </div>
       </section>
 
+      {/* GIFTS */}
+      <section aria-labelledby="gifts-title" className="border-y border-border bg-secondary">
+        <div className="container mx-auto px-6 py-16 md:py-20 text-center rs-reveal">
+          <p className="rs-eyebrow mb-4">מתנות</p>
+          <h2 id="gifts-title" className="font-serif text-4xl md:text-5xl font-light italic">תכשיט שנשאר</h2>
+          <span className="rs-rule my-6" aria-hidden="true" />
+          <p className="text-sm md:text-base text-muted-foreground max-w-md mx-auto leading-relaxed">
+            בחרו למי המתנה ומה התקציב, ונציג את התכשיטים שזמינים כרגע.
+          </p>
+          <div className="mt-10 grid grid-cols-2 gap-3 md:gap-5 max-w-3xl mx-auto">
+            {([
+              { who: "her", title: "מתנה לה", src: necklacesImg },
+              { who: "him", title: "מתנה לו", src: eitanModelAsset.url },
+            ] as const).map((g) => (
+              <Link key={g.who} to="/gifts" search={{ for: g.who }} className="rs-tile group relative block aspect-[4/5] overflow-hidden">
+                <img src={g.src} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/5 to-transparent" />
+                <div className="absolute bottom-5 inset-x-0 text-center text-background">
+                  <h3 className="font-serif text-2xl md:text-3xl font-light italic">{g.title}</h3>
+                  <span className="rs-link text-[0.6875rem] tracking-[0.22em] uppercase mt-2">לבחירת מתנה</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* BEST SELLERS */}
       <BestSellers />
 
       {/* BRAND STORY */}
-      <section className="container mx-auto px-6 py-20 md:py-24 border-t border-border">
-        <div className="max-w-xl mx-auto text-center">
-          <h2 className="font-serif text-3xl md:text-4xl italic mb-6">כל תכשיט נבחר בקפידה</h2>
+      <section className="container mx-auto px-6 py-20 md:py-28 border-t border-border">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-20 items-center max-w-5xl mx-auto">
+          <div className="rs-tile relative aspect-[4/5] overflow-hidden rs-reveal">
+            <img src={necklacesImg} alt="שרשרת עדינה מקולקציית Royal Silver" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+          </div>
+          <div className="text-center md:text-start rs-reveal">
+          <h2 className="font-serif text-4xl md:text-5xl font-light italic mb-6">כל תכשיט נבחר בקפידה</h2>
+          <span className="rs-rule mb-8 mx-auto md:mx-0 md:ms-0" aria-hidden="true" />
           <p className="text-[15px] md:text-base text-foreground/75 leading-[2] mb-4">
             ב־Royal Silver | רויאל סילבר אנחנו מאמינים שתכשיט הוא הרבה יותר מאביזר – הוא חלק מהרגעים שאת רוצה לזכור.
           </p>
@@ -217,6 +268,7 @@ function Home() {
           <p className="text-[15px] md:text-base text-foreground/75 leading-[2]">
             המטרה שלנו פשוטה: להעניק לך חווית קנייה נעימה, שירות אישי ותכשיטים שתשמחי לענוד שוב ושוב.
           </p>
+          </div>
         </div>
       </section>
 

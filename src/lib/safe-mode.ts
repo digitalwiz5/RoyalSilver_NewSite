@@ -1,10 +1,12 @@
 /**
- * Development safe mode (V2 work copy). Active in `vite dev` unless VITE_RS_ALLOW_LIVE=1.
+ * Safe mode (V2 work copy). Active in `vite dev` and in preview builds unless VITE_RS_ALLOW_LIVE=1.
  * While active: Shopify Storefront reads stay real (read-only), every cart/checkout mutation is
  * simulated locally (no carts are created in Shopify), the Meta Pixel never loads, and checkout is blocked.
  */
+/** Public preview builds (VITE_RS_PREVIEW=1) are always in safe mode: no real carts, no Pixel, no checkout. */
+export const IS_PREVIEW: boolean = import.meta.env?.VITE_RS_PREVIEW === "1";
 export const SAFE_MODE: boolean =
-  Boolean(import.meta.env?.DEV) && import.meta.env?.VITE_RS_ALLOW_LIVE !== "1";
+  (Boolean(import.meta.env?.DEV) || IS_PREVIEW) && import.meta.env?.VITE_RS_ALLOW_LIVE !== "1";
 
 let lineSeq = 0;
 
