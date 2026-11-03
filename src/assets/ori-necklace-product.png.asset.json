@@ -1,11 +1,5 @@
 {
-  "version": 1,
-  "asset_id": "35a96258-b0b1-4bc8-a9f3-df451fcced94",
-  "project_id": "02d0fc41-4fe3-4a30-b262-a4ad2b17df8d",
-  "url": "/__l5e/assets-v1/35a96258-b0b1-4bc8-a9f3-df451fcced94/ori-necklace-product.png",
-  "r2_key": "a/v1/02d0fc41-4fe3-4a30-b262-a4ad2b17df8d/35a96258-b0b1-4bc8-a9f3-df451fcced94/ori-necklace-product.png",
-  "original_filename": "ori-necklace-product.png",
-  "size": 1916972,
-  "content_type": "image/png",
-  "created_at": "2026-10-05T11:35:00Z"
+  "url": "/media/ori-necklace-product.png",
+  "filename": "ori-necklace-product.png",
+  "content_type": "image/png"
 }

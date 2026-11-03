@@ -20,6 +20,6 @@ describe("verified Royal Silver identity", () => {
     assert.equal(data[0]["@type"], "OnlineStore");
     assert.equal(data[0].url, "https://www.royalsilver.net/");
     assert.equal(data[1].publisher?.["@id"], data[0]["@id"]);
-    assert.equal(data[0].logo, "https://www.royalsilver.net/__l5e/assets-v1/5421c45f-3387-4c30-a99b-24635bce17fc/royalsilver-logo.png");
+    assert.equal(data[0].logo, "https://www.royalsilver.net/media/royalsilver-logo.png");
   });
 });

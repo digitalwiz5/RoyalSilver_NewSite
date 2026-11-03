@@ -1,11 +1,5 @@
 {
-  "version": 1,
-  "asset_id": "d03f0993-1fce-4848-baaa-044e3620af1a",
-  "project_id": "02d0fc41-4fe3-4a30-b262-a4ad2b17df8d",
-  "url": "/__l5e/assets-v1/d03f0993-1fce-4848-baaa-044e3620af1a/efrat-blue.png",
-  "r2_key": "a/v1/02d0fc41-4fe3-4a30-b262-a4ad2b17df8d/d03f0993-1fce-4848-baaa-044e3620af1a/efrat-blue.png",
-  "original_filename": "efrat-blue.png",
-  "size": 1491015,
-  "content_type": "image/png",
-  "created_at": "2026-10-06T18:01:23Z"
+  "url": "/media/efrat-blue.png",
+  "filename": "efrat-blue.png",
+  "content_type": "image/png"
 }

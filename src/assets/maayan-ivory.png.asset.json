@@ -1,11 +1,5 @@
 {
-  "version": 1,
-  "asset_id": "761f8a02-9526-4b51-a218-5efa305d9c9b",
-  "project_id": "02d0fc41-4fe3-4a30-b262-a4ad2b17df8d",
-  "url": "/__l5e/assets-v1/761f8a02-9526-4b51-a218-5efa305d9c9b/maayan-ivory.png",
-  "r2_key": "a/v1/02d0fc41-4fe3-4a30-b262-a4ad2b17df8d/761f8a02-9526-4b51-a218-5efa305d9c9b/maayan-ivory.png",
-  "original_filename": "maayan-ivory.png",
-  "size": 1578472,
-  "content_type": "image/png",
-  "created_at": "2026-10-06T18:44:28Z"
+  "url": "/media/maayan-ivory.png",
+  "filename": "maayan-ivory.png",
+  "content_type": "image/png"
 }

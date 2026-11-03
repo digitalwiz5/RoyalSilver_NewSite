@@ -1,11 +1,5 @@
 {
-  "version": 1,
-  "asset_id": "fc798d8c-5523-45f2-8691-331a074591b5",
-  "project_id": "02d0fc41-4fe3-4a30-b262-a4ad2b17df8d",
-  "url": "/__l5e/assets-v1/fc798d8c-5523-45f2-8691-331a074591b5/SHAY_MODEL_worn_ear.png",
-  "r2_key": "a/v1/02d0fc41-4fe3-4a30-b262-a4ad2b17df8d/fc798d8c-5523-45f2-8691-331a074591b5/SHAY_MODEL_worn_ear.png",
-  "original_filename": "SHAY_MODEL_worn_ear.png",
-  "size": 2256315,
-  "content_type": "image/png",
-  "created_at": "2026-10-30T11:51:36Z"
+  "url": "/media/SHAY_MODEL_worn_ear.png",
+  "filename": "SHAY_MODEL_worn_ear.png",
+  "content_type": "image/png"
 }

@@ -158,7 +158,7 @@ const CART_LINES_REMOVE_MUTATION = `
 function formatCheckoutUrl(checkoutUrl: string): string {
   try {
     const url = new URL(checkoutUrl);
-    // The custom domain (royalsilver.net) points to the Lovable site, not to
+    // The custom domain (royalsilver.net) points to this storefront, not to
     // Shopify's storefront, so checkout must run on the myshopify domain.
     url.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
     url.protocol = "https:";

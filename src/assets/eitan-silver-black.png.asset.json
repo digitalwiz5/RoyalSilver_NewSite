@@ -1,11 +1,5 @@
 {
-  "version": 1,
-  "asset_id": "19687d76-e0e3-4cd1-9df8-6203e32ad6a8",
-  "project_id": "02d0fc41-4fe3-4a30-b262-a4ad2b17df8d",
-  "url": "/__l5e/assets-v1/19687d76-e0e3-4cd1-9df8-6203e32ad6a8/eitan-silver-black.png",
-  "r2_key": "a/v1/02d0fc41-4fe3-4a30-b262-a4ad2b17df8d/19687d76-e0e3-4cd1-9df8-6203e32ad6a8/eitan-silver-black.png",
-  "original_filename": "eitan-silver-black.png",
-  "size": 2416976,
-  "content_type": "image/png",
-  "created_at": "2026-10-05T07:39:48Z"
+  "url": "/media/eitan-silver-black.png",
+  "filename": "eitan-silver-black.png",
+  "content_type": "image/png"
 }

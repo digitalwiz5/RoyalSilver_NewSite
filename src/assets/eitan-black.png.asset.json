@@ -1,11 +1,5 @@
 {
-  "version": 1,
-  "asset_id": "2dc9199c-3e00-4163-9daa-605bef8f1b6a",
-  "project_id": "02d0fc41-4fe3-4a30-b262-a4ad2b17df8d",
-  "url": "/__l5e/assets-v1/2dc9199c-3e00-4163-9daa-605bef8f1b6a/eitan-black.png",
-  "r2_key": "a/v1/02d0fc41-4fe3-4a30-b262-a4ad2b17df8d/2dc9199c-3e00-4163-9daa-605bef8f1b6a/eitan-black.png",
-  "original_filename": "eitan-black.png",
-  "size": 2335181,
-  "content_type": "image/png",
-  "created_at": "2026-10-05T07:39:52Z"
+  "url": "/media/eitan-black.png",
+  "filename": "eitan-black.png",
+  "content_type": "image/png"
 }
