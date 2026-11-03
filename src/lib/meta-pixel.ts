@@ -74,7 +74,7 @@ export function updatePixelConsent(region: string | null) {
     fbq.queue = []; fbq.push = fbq; fbq.loaded = true; fbq.version = "2.0";
     window.fbq = fbq; window._fbq = fbq;
     dispatch("set", "autoConfig", false, META_PIXEL_ID);
-    dispatch("init", META_PIXEL_ID, {}, { agent: "lovable" });
+    dispatch("init", META_PIXEL_ID, {}, { agent: "royalsilver" });
     const script = document.createElement("script");
     script.async = true; script.src = "https://connect.facebook.net/en_US/fbevents.js";
     script.referrerPolicy = "strict-origin";

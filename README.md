@@ -1,26 +1,19 @@
-# royalsilver
+# Royal Silver storefront
 
-https://zaza-brand.com/ - אני רוצה לבנות חנות כזו לתכשייטים
+Hebrew/RTL jewelry storefront. TanStack Start (React 19) + Tailwind 4, reading products and managing carts through the Shopify Storefront API. Standalone: no third-party site-builder dependencies.
 
-This project was built with [Lovable](https://lovable.dev).
-
-**Live app**: https://https-royalsilver-net.lovable.app
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/02d0fc41-4fe3-4a30-b262-a4ad2b17df8d).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+## Develop
+```bash
+npm install
+npm run dev     # http://localhost:8080
+npm run build
+npm run lint
 ```
+In `npm run dev` a **safe mode** is active (`src/lib/safe-mode.ts`): Shopify reads stay real and read-only, cart/checkout mutations are simulated locally, the Meta Pixel never loads and checkout is blocked. Set `VITE_RS_ALLOW_LIVE=1` only with explicit approval.
+
+## Configuration
+- Shopify domain/token: `src/lib/shopify.ts` (Storefront tokens are public, read-scoped).
+- Hosting target is undecided; `vite.config.ts` includes the Cloudflare plugin for builds only.
+
+## Open items
+- Product/brand images are still referenced through `src/assets/*.asset.json` manifests that point at the old host. They must be replaced with real files in `public/media` (see git history/notes).
