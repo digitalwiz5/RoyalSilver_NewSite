@@ -72,6 +72,13 @@ export function Header() {
                 >
                   הכל
                 </Link>
+                <Link
+                  to="/gifts"
+                  onClick={() => setOpen(false)}
+                  className="text-base py-3 px-2 border-b border-border hover:opacity-60 transition"
+                >
+                  מתנות
+                </Link>
                 {navGroups.map((g) => (
                   <div key={g.label} className="border-b border-border">
                     <p className="text-xs tracking-[0.25em] uppercase text-muted-foreground pt-4 pb-1 px-2">
@@ -100,6 +107,9 @@ export function Header() {
         <nav className="hidden md:flex items-center gap-8 text-sm tracking-wider">
           <Link to="/" className="hover:opacity-60 transition">
             הכל
+          </Link>
+          <Link to="/gifts" className="hover:opacity-60 transition">
+            מתנות
           </Link>
           {navGroups.map((g) => (
             <div key={g.label} className="relative group">

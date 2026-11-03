@@ -12,6 +12,7 @@ import { ShoppingBag, Minus, Plus, Trash2, Loader2 } from "lucide-react";
 import { useCartStore, SHIPPING_OPTIONS, NO_SHIPPING_HANDLES, type ShippingMethod } from "@/stores/cartStore";
 import { formatPrice, formatSizeValue } from "@/lib/shopify";
 import { IRIS_CODE, IRIS_MESSAGE } from "@/lib/cart-discounts";
+import { CartAddOns } from "@/components/CartAddOns";
 
 export function CartDrawer() {
   const [open, setOpen] = useState(false);
@@ -168,6 +169,7 @@ export function CartDrawer() {
                     </div>
                   </div>
                 ))}
+                <CartAddOns onNavigate={() => setOpen(false)} />
               </div>
 
               <div className="pt-4 border-t border-border space-y-4">
