@@ -12,6 +12,8 @@ import { giftPool, PRICE_BANDS, type PriceBand, type Recipient } from "@/lib/gif
 import { pageMeta, canonical, breadcrumbLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/gifts")({
+  validateSearch: (search: Record<string, unknown>): { for?: "her" | "him" } =>
+    search.for === "him" ? { for: "him" } : search.for === "her" ? { for: "her" } : {},
   head: () => ({
     meta: pageMeta({
       title: "מתנות | Royal Silver",
@@ -33,7 +35,8 @@ const RECIPIENTS: Array<{ id: Recipient; label: string }> = [
 
 function GiftsPage() {
   useCartSync();
-  const [recipient, setRecipient] = useState<Recipient>("her");
+  const search = Route.useSearch();
+  const [recipient, setRecipient] = useState<Recipient>(search.for ?? "her");
   const [band, setBand] = useState<PriceBand>("all");
   const { data, isLoading, isError } = useQuery({
     queryKey: ["products", "all-catalog"],

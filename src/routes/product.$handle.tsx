@@ -1010,9 +1010,9 @@ function ProductPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
           {/* GALLERY */}
-          <div id="product-gallery" className="scroll-mt-24">
+          <div id="product-gallery" className="scroll-mt-24 md:sticky md:top-24 self-start">
             <div
-              className={`${isEitan || isLior || isOri || isEfrat || isMaayan || isMatar || isOmer || isGuy || isGuy ? "aspect-square" : "aspect-[3/4]"} bg-secondary overflow-hidden mb-3 touch-pan-y`}
+              className={`${isEitan || isLior || isOri || isEfrat || isMaayan || isMatar || isOmer || isGuy || isGuy ? "aspect-square" : "aspect-[3/4]"} bg-secondary overflow-hidden mb-3 touch-pan-y relative`}
               onTouchStart={(event) => {
                 galleryTouchStartX.current = event.touches[0]?.clientX ?? null;
               }}
@@ -1044,6 +1044,11 @@ function ProductPage() {
                     }
                   }}
                 />
+              )}
+              {images.length > 1 && (
+                <span className="absolute bottom-3 start-3 bg-background/85 text-foreground text-[11px] tracking-widest px-2.5 py-1" aria-hidden="true">
+                  {activeImg + 1} / {images.length}
+                </span>
               )}
             </div>
             {images.length > 1 && (
@@ -1083,7 +1088,7 @@ function ProductPage() {
 
           {/* DETAILS */}
           <div className="md:py-4">
-            <h1 className="font-serif text-3xl md:text-5xl italic mb-4 leading-tight">{data.title}</h1>
+            <h1 className="font-serif text-[1.75rem] md:text-4xl font-light italic mb-5 leading-[1.25]">{data.title}</h1>
 
             {subtitle && (
               <p className="text-[15px] md:text-base text-foreground/70 leading-[1.9] mb-7 max-w-[42ch]">
@@ -1256,7 +1261,7 @@ function ProductPage() {
             <Button
               variant="hero"
               size="lg"
-              className="w-full mt-2"
+              className="w-full mt-3 h-14 text-[13px] tracking-[0.22em]"
               onClick={handleAdd}
               disabled={isLoading || !variant?.availableForSale || (!needsSize && !matchedVariant && !isShay)}
             >

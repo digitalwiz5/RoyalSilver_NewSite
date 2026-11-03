@@ -229,8 +229,20 @@ function Home() {
           <p className="text-sm md:text-base text-muted-foreground max-w-md mx-auto leading-relaxed">
             בחרו למי המתנה ומה התקציב, ונציג את התכשיטים שזמינים כרגע.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link to="/gifts" className="rs-btn-solid">למצוא מתנה</Link>
+          <div className="mt-10 grid grid-cols-2 gap-3 md:gap-5 max-w-3xl mx-auto">
+            {([
+              { who: "her", title: "מתנה לה", src: necklacesImg },
+              { who: "him", title: "מתנה לו", src: eitanModelAsset.url },
+            ] as const).map((g) => (
+              <Link key={g.who} to="/gifts" search={{ for: g.who }} className="rs-tile group relative block aspect-[4/5] overflow-hidden">
+                <img src={g.src} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/5 to-transparent" />
+                <div className="absolute bottom-5 inset-x-0 text-center text-background">
+                  <h3 className="font-serif text-2xl md:text-3xl font-light italic">{g.title}</h3>
+                  <span className="rs-link text-[0.6875rem] tracking-[0.22em] uppercase mt-2">לבחירת מתנה</span>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -239,10 +251,14 @@ function Home() {
       <BestSellers />
 
       {/* BRAND STORY */}
-      <section className="container mx-auto px-6 py-20 md:py-24 border-t border-border">
-        <div className="max-w-xl mx-auto text-center">
+      <section className="container mx-auto px-6 py-20 md:py-28 border-t border-border">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-20 items-center max-w-5xl mx-auto">
+          <div className="rs-tile relative aspect-[4/5] overflow-hidden rs-reveal">
+            <img src={necklacesImg} alt="שרשרת עדינה מקולקציית Royal Silver" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+          </div>
+          <div className="text-center md:text-start rs-reveal">
           <h2 className="font-serif text-4xl md:text-5xl font-light italic mb-6">כל תכשיט נבחר בקפידה</h2>
-          <span className="rs-rule mb-8" aria-hidden="true" />
+          <span className="rs-rule mb-8 mx-auto md:mx-0 md:ms-0" aria-hidden="true" />
           <p className="text-[15px] md:text-base text-foreground/75 leading-[2] mb-4">
             ב־Royal Silver | רויאל סילבר אנחנו מאמינים שתכשיט הוא הרבה יותר מאביזר – הוא חלק מהרגעים שאת רוצה לזכור.
           </p>
@@ -252,6 +268,7 @@ function Home() {
           <p className="text-[15px] md:text-base text-foreground/75 leading-[2]">
             המטרה שלנו פשוטה: להעניק לך חווית קנייה נעימה, שירות אישי ותכשיטים שתשמחי לענוד שוב ושוב.
           </p>
+          </div>
         </div>
       </section>
 

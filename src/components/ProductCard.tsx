@@ -81,7 +81,7 @@ export function ProductCard({ product, categorySlug }: { product: ShopifyProduct
           <img
             src={images[0].node.url}
             alt={images[0].node.altText || node.title}
-            className={`absolute inset-0 w-full h-full transition-opacity duration-700 ${
+            className={`absolute inset-0 w-full h-full transition-[opacity,transform] duration-[1200ms] ease-out group-hover:scale-[1.03] ${
               leadIsInfographic ? "object-contain" : "object-cover"
             }`}
             style={{ opacity: hover && images[1] ? 0 : 1 }}
@@ -91,7 +91,7 @@ export function ProductCard({ product, categorySlug }: { product: ShopifyProduct
           <img
             src={images[1].node.url}
             alt={node.title}
-            className={`absolute inset-0 w-full h-full transition-opacity duration-700 ${
+            className={`absolute inset-0 w-full h-full transition-[opacity,transform] duration-[1200ms] ease-out group-hover:scale-[1.03] ${
               hoverIsInfographic ? "object-contain" : "object-cover"
             }`}
             style={{ opacity: hover ? 1 : 0 }}
@@ -108,8 +108,8 @@ export function ProductCard({ product, categorySlug }: { product: ShopifyProduct
           {isLoading ? <Loader2 className="h-3 w-3 animate-spin mx-auto" /> : variant?.availableForSale ? "הוספה לעגלה" : "אזל מהמלאי"}
         </Button>}
       </div>
-      <div className="pt-4 text-center">
-        <h3 className="font-serif text-base">{cardCopy.title}</h3>
+      <div className="pt-4 md:pt-5 text-center">
+        <h3 className="font-serif text-[15px] md:text-lg font-normal leading-snug line-clamp-2 min-h-[2.9rem]">{cardCopy.title}</h3>
         {(cardCopy.description || isMensBraceletCard) && (
           <p className={isMensBraceletCard
             ? "mt-2 text-[13px] text-muted-foreground leading-5 line-clamp-2 h-10"
