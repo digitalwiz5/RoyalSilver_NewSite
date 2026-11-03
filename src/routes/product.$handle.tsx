@@ -522,6 +522,17 @@ function ProductPage() {
   const [selected, setSelected] = useState<Record<string, string>>({});
   const [imageFit, setImageFit] = useState<Record<number, "contain" | "cover">>({});
   const galleryTouchStartX = useRef<number | null>(null);
+  // Callback-style ref in state: the product block mounts after async data loads, so observe once it exists.
+  const [ctaEl, setCtaEl] = useState<HTMLDivElement | null>(null);
+  const [stickyOn, setStickyOn] = useState(false);
+  useEffect(() => {
+    if (!ctaEl) return;
+    const update = () => setStickyOn(ctaEl.getBoundingClientRect().bottom < 0); // setState bails out when unchanged
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => { window.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
+  }, [ctaEl]);
 
   const { data, isLoading: loadingProduct } = useQuery({
     queryKey: ["product", handle],
@@ -980,6 +991,17 @@ function ProductPage() {
   return (
     <div dir="rtl" className="min-h-screen bg-background">
       <Header />
+      {stickyOn && variant?.availableForSale && (
+        <div className="md:hidden fixed bottom-0 inset-x-0 z-40 flex items-center gap-3 border-t border-border bg-background px-4 py-3" dir="rtl">
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-xs text-muted-foreground">{data.title}</p>
+            <p className="text-base font-medium">{formatPrice(variant.price.amount, variant.price.currencyCode)}</p>
+          </div>
+          <Button variant="hero" size="lg" className="shrink-0" onClick={handleAdd} disabled={isLoading}>
+            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : needsSize ? "בחירת מידה" : "הוספה לסל"}
+          </Button>
+        </div>
+      )}
       <div className="container mx-auto px-6 py-8">
         <Link
           to="/"
@@ -1233,6 +1255,7 @@ function ProductPage() {
               );
             })}
 
+            <div ref={setCtaEl}>
             <Button
               variant="hero"
               size="lg"
@@ -1242,6 +1265,7 @@ function ProductPage() {
             >
               {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : variant?.availableForSale ? "הוספה לסל" : "אזל מהמלאי"}
             </Button>
+            </div>
 
             {/* TRUST BADGES */}
             <div className="grid grid-cols-2 gap-3 mt-6 text-xs">
