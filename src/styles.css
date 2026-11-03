@@ -222,3 +222,80 @@ html[data-a11y-cursor="big"] * {
   outline: 2px solid var(--ring, currentColor);
   outline-offset: 2px;
 }
+
+/* ===== Premium design layer (Royal Silver V2) ===== */
+:root {
+  /* warmer ivory / linen palette, softer charcoal */
+  --background: oklch(0.975 0.011 85);
+  --card: oklch(0.975 0.011 85);
+  --popover: oklch(0.975 0.011 85);
+  --foreground: oklch(0.21 0.012 60);
+  --primary: oklch(0.21 0.012 60);
+  --secondary: oklch(0.945 0.018 80);
+  --muted: oklch(0.945 0.018 80);
+  --border: oklch(0.88 0.016 80);
+  --input: oklch(0.88 0.016 80);
+  --ease-lux: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+::selection { background: oklch(0.82 0.04 80); color: var(--foreground); }
+
+/* small caps-style eyebrow used above section titles */
+.rs-eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+/* hairline ornament */
+.rs-rule { display: block; width: 3rem; height: 1px; background: var(--foreground); opacity: 0.35; margin-inline: auto; }
+
+/* animated underline link */
+.rs-link {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.25rem;
+}
+.rs-link::after {
+  content: "";
+  position: absolute; inset-inline: 0; bottom: 0; height: 1px;
+  background: currentColor; transform-origin: right; transform: scaleX(0.35);
+  transition: transform 0.5s var(--ease-lux);
+}
+.group:hover .rs-link::after, .rs-link:hover::after { transform: scaleX(1); }
+
+/* editorial collection tiles */
+.rs-tile img { transition: transform 1.4s var(--ease-lux); }
+.rs-tile:hover img { transform: scale(1.045); }
+
+/* buttons */
+.rs-btn-solid, .rs-btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 3rem; padding: 0 2.25rem;
+  font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase;
+  transition: background-color 0.35s var(--ease-lux), color 0.35s var(--ease-lux), border-color 0.35s var(--ease-lux), opacity 0.35s;
+}
+.rs-btn-solid { background: var(--foreground); color: var(--background); border: 1px solid var(--foreground); }
+.rs-btn-solid:hover { background: transparent; color: var(--foreground); }
+.rs-btn-ghost { background: transparent; color: var(--foreground); border: 1px solid color-mix(in oklab, var(--foreground) 55%, transparent); }
+.rs-btn-ghost:hover { background: var(--foreground); color: var(--background); }
+
+/* gentle scroll reveal: CSS-only, progressive enhancement (content is always visible if unsupported) */
+@supports (animation-timeline: view()) {
+  .rs-reveal {
+    animation: rs-fade-up 1s var(--ease-lux) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+@keyframes rs-fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .rs-reveal { animation: none !important; }
+  .rs-tile img, .rs-link::after { transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* horizontal quick-category rail */
+.rs-rail { scrollbar-width: none; }
+.rs-rail::-webkit-scrollbar { display: none; }
