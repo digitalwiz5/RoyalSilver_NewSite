@@ -1,11 +1,5 @@
 {
-  "version": 1,
-  "asset_id": "be19160a-7d35-4431-b247-971e82f609ac",
-  "project_id": "02d0fc41-4fe3-4a30-b262-a4ad2b17df8d",
-  "url": "/__l5e/assets-v1/be19160a-7d35-4431-b247-971e82f609ac/hero-video.mp4",
-  "r2_key": "a/v1/02d0fc41-4fe3-4a30-b262-a4ad2b17df8d/be19160a-7d35-4431-b247-971e82f609ac/hero-video.mp4",
-  "original_filename": "hero-video.mp4",
-  "size": 2471609,
-  "content_type": "video/mp4",
-  "created_at": "2026-08-05T16:31:16Z"
+  "url": "/media/hero-video.mp4",
+  "filename": "hero-video.mp4",
+  "content_type": "video/mp4"
 }

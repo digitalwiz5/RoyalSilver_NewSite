@@ -1,11 +1,5 @@
 {
-  "version": 1,
-  "asset_id": "6a52f42d-b773-4a93-a33e-5e6a83e8d7e3",
-  "project_id": "02d0fc41-4fe3-4a30-b262-a4ad2b17df8d",
-  "url": "/__l5e/assets-v1/6a52f42d-b773-4a93-a33e-5e6a83e8d7e3/efrat-green.png",
-  "r2_key": "a/v1/02d0fc41-4fe3-4a30-b262-a4ad2b17df8d/6a52f42d-b773-4a93-a33e-5e6a83e8d7e3/efrat-green.png",
-  "original_filename": "efrat-green.png",
-  "size": 1732836,
-  "content_type": "image/png",
-  "created_at": "2026-10-06T18:01:19Z"
+  "url": "/media/efrat-green.png",
+  "filename": "efrat-green.png",
+  "content_type": "image/png"
 }

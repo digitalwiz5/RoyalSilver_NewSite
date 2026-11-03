@@ -15,5 +15,5 @@ In `npm run dev` a **safe mode** is active (`src/lib/safe-mode.ts`): Shopify rea
 - Shopify domain/token: `src/lib/shopify.ts` (Storefront tokens are public, read-scoped).
 - Hosting target is undecided; `vite.config.ts` includes the Cloudflare plugin for builds only.
 
-## Open items
-- Product/brand images are still referenced through `src/assets/*.asset.json` manifests that point at the old host. They must be replaced with real files in `public/media` (see git history/notes).
+## Media
+Brand and product images/video live in `public/media` (served at `/media/...`). `src/assets/*.asset.json` are small manifests holding each file URL.

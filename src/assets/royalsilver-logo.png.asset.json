@@ -1,11 +1,5 @@
 {
-  "version": 1,
-  "asset_id": "5421c45f-3387-4c30-a99b-24635bce17fc",
-  "project_id": "02d0fc41-4fe3-4a30-b262-a4ad2b17df8d",
-  "url": "/__l5e/assets-v1/5421c45f-3387-4c30-a99b-24635bce17fc/royalsilver-logo.png",
-  "r2_key": "a/v1/02d0fc41-4fe3-4a30-b262-a4ad2b17df8d/5421c45f-3387-4c30-a99b-24635bce17fc/royalsilver-logo.png",
-  "original_filename": "royalsilver-logo.png",
-  "size": 402175,
-  "content_type": "image/png",
-  "created_at": "2026-08-29T06:28:34Z"
+  "url": "/media/royalsilver-logo.png",
+  "filename": "royalsilver-logo.png",
+  "content_type": "image/png"
 }

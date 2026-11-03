@@ -106,7 +106,7 @@ function Home() {
       <section className="relative w-full h-[65vh] md:h-[75vh] overflow-hidden bg-background">
         <video
           ref={videoRef}
-          key={heroVideo.asset_id}
+          key={heroVideo.filename}
           src={heroVideo.url}
           autoPlay
           muted
