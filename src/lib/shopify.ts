@@ -2,9 +2,12 @@ import { toast } from "sonner";
 import { SAFE_MODE, simulateStorefront } from "./safe-mode";
 
 export const SHOPIFY_API_VERSION = "2026-10";
-export const SHOPIFY_STORE_PERMANENT_DOMAIN = "hc2k41-jj.myshopify.com";
+// Defaults point at the live store. Override with VITE_SHOPIFY_STORE_DOMAIN / VITE_SHOPIFY_STOREFRONT_TOKEN
+// (e.g. a Shopify development store for checkout testing). Storefront tokens are public, read-scoped tokens.
+const env = (import.meta.env ?? {}) as Record<string, string | undefined>;
+export const SHOPIFY_STORE_PERMANENT_DOMAIN = env.VITE_SHOPIFY_STORE_DOMAIN || "hc2k41-jj.myshopify.com";
 export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
-export const SHOPIFY_STOREFRONT_TOKEN = "a564c7ce70db2fb2445c493004236901";
+export const SHOPIFY_STOREFRONT_TOKEN = env.VITE_SHOPIFY_STOREFRONT_TOKEN || "a564c7ce70db2fb2445c493004236901";
 
 export interface ShopifyProduct {
   node: {

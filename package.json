@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "build:preview": "node scripts/build-preview.mjs"
+    "build:preview": "node scripts/build-preview.mjs",
+    "deploy:preview": "npm run build:preview && wrangler deploy"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",
