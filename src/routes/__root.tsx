@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { IS_PREVIEW } from "@/lib/safe-mode";
+import { IS_PREVIEW, IS_STAGING, NOINDEX } from "@/lib/safe-mode";
 import { AccessibilityWidget } from "@/components/AccessibilityWidget";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { AdvertisingConsent } from "@/components/AdvertisingConsent";
@@ -76,7 +76,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
       meta: [
-        ...(IS_PREVIEW ? [{ name: "robots", content: "noindex, nofollow" }] : []),
+        ...(NOINDEX ? [{ name: "robots", content: "noindex, nofollow" }] : []),
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { title: "Royal Silver — תכשיטים עדינים איכותיים" },
@@ -126,9 +126,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {IS_PREVIEW && (
+      {(IS_PREVIEW || IS_STAGING) && (
         <div dir="rtl" className="bg-foreground text-background text-center text-xs py-1.5 px-3">
-          תצוגה מקדימה לבדיקה בלבד · התשלום והעגלה מדומים, לא נוצרת הזמנה
+          {IS_STAGING
+            ? "גרסת בדיקה · הקנייה אמיתית: כל הזמנה שתושלם תיווצר בחנות"
+            : "תצוגה מקדימה לבדיקה בלבד · התשלום והעגלה מדומים, לא נוצרת הזמנה"}
         </div>
       )}
       <DiscountBenefit />

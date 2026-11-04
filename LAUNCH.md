@@ -13,6 +13,7 @@ Nothing here has been done yet. Every step that touches the live domain, the liv
 |---|---|---|---|---|---|
 | dev server | `npm run dev` | simulated | blocked | off | n/a |
 | public preview | `npm run build:preview` | simulated | blocked | off | noindex, robots disallow |
+| staging | `npm run build:staging` / `npm run deploy:staging` | **real Shopify cart** | **real Shopify checkout (real orders!)** | off | noindex, robots disallow |
 | production | `npm run build` | **real Shopify cart** | **real Shopify checkout** | on after consent | indexable |
 
 Safe mode is controlled in `src/lib/safe-mode.ts`. Production builds do not set `VITE_RS_PREVIEW`.
@@ -46,3 +47,7 @@ Restore the previous DNS records (kept from step 2). TTL should be lowered to 30
 - A wrong DNS move can interrupt website and e-mail.
 - Apps/pixels/scripts that lived on the old site do not move automatically.
 - Production checkout runs on Shopify's domain; payment settings are not changed by this project.
+
+## Staging (live since Nov 2026)
+- URL: https://royalsilver-staging.royalsilver-site.workers.dev (separate Worker from the safe preview)
+- Real carts and real checkout against the live Shopify store, Meta Pixel off, noindex. A completed checkout creates a real order: use a low-value item or a 100% discount code, then cancel/refund in Shopify admin.

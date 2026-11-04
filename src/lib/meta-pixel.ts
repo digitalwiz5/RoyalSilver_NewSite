@@ -1,5 +1,5 @@
 import { advertisingAllowed, readConsent } from "./advertising-consent";
-import { SAFE_MODE } from "./safe-mode";
+import { NO_TRACKING } from "./safe-mode";
 export const META_PIXEL_ID = "2901339290228652";
 type PixelArgs = unknown[];
 interface PixelFunction {
@@ -49,7 +49,7 @@ function cleanAddress() {
   if (changed) window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
 }
 export function updatePixelConsent(region: string | null) {
-  if (SAFE_MODE) return; // never load or fire the production Meta Pixel from a dev build
+  if (NO_TRACKING) return; // never load or fire the production Meta Pixel from dev, preview or staging builds
   currentRegion = region;
   regionResolved = true;
   if (!permission()) {

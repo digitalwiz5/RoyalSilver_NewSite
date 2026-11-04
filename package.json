@@ -11,7 +11,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "build:preview": "node scripts/build-preview.mjs",
-    "deploy:preview": "npm run build:preview && wrangler deploy"
+    "deploy:preview": "npm run build:preview && wrangler deploy",
+    "build:staging": "node scripts/build-staging.mjs",
+    "deploy:staging": "npm run build:staging && wrangler deploy --name royalsilver-staging"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",

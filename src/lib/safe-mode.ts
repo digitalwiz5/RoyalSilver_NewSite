@@ -5,8 +5,18 @@
  */
 /** Public preview builds (VITE_RS_PREVIEW=1) are always in safe mode: no real carts, no Pixel, no checkout. */
 export const IS_PREVIEW: boolean = import.meta.env?.VITE_RS_PREVIEW === "1";
+/**
+ * Staging builds (VITE_RS_STAGING=1) use the REAL Shopify cart and checkout (so purchases can be tested end to end),
+ * but never load the Meta Pixel and are noindex, so they cannot pollute ad data or search results.
+ */
+export const IS_STAGING: boolean = import.meta.env?.VITE_RS_STAGING === "1";
+/** Pages that must stay out of search engines. */
+export const NOINDEX: boolean = IS_PREVIEW || IS_STAGING;
 export const SAFE_MODE: boolean =
   (Boolean(import.meta.env?.DEV) || IS_PREVIEW) && import.meta.env?.VITE_RS_ALLOW_LIVE !== "1";
+
+/** No tracking at all in dev, preview and staging. */
+export const NO_TRACKING: boolean = SAFE_MODE || IS_STAGING;
 
 let lineSeq = 0;
 
