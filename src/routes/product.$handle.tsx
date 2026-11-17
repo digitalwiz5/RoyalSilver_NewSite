@@ -17,15 +17,7 @@ import { LIOR_HANDLE, liorGalleryImages } from "@/lib/lior";
 import { EITAN_HANDLE, eitanImages, eitanImageIndexForColor } from "@/lib/eitan";
 
 const LIA_HANDLE = "טבעת-כסף-זרקון-ריבוע";
-const ORI_HANDLE = "שרשרת-מגן-דוד-ה-לבן";
-const ORI_WHITE_SKU = "JNM1118-1";
-const EFRAT_HANDLE = "שרשרת-כסף-925-עניבה-עם-טיפה-משובצת-באבני-זרקון";
-const EFRAT_HIDDEN_SKUS = new Set(["JNW1022-2"]);
 const EFRAT_HIDDEN_COLORS = new Set(["שחור"]);
-// Green leaf drop earrings: only the green variant (JEW1001-1) is offered for now;
-// the white variant stays untouched in Shopify and is hidden from the storefront.
-const LOTUS_HANDLE = "עגיל-כסף-חישוק-משובץ-דגם-לוטוס-לבן";
-const LOTUS_HIDDEN_SKUS = new Set(["JEW1001-2"]);
 const LOTUS_HIDDEN_COLORS = new Set(["לבן"]);
 const LOTUS_GREEN_IMAGES = [
   { node: { url: "https://cdn.shopify.com/s/files/1/0849/2086/0893/files/99EA752F-A7A4-40A8-B468-4EA56630CE08.png?v=1793364622", altText: "עגילי כסף תלויים עם זירקונים ירוקים על רקע בד פשתן" } },
@@ -100,6 +92,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
+import { EFRAT_HANDLE, LOTUS_HANDLE, ORI_HANDLE, isVisibleVariant } from "@/lib/visible-variants";
 
 const SEO_OVERRIDES: Record<string, { title: string; description: string }> = {
   [SHAY_HANDLE]: SHAY_SEO,
@@ -543,13 +536,7 @@ function ProductPage() {
 
   const visibleVariantEdges = useMemo(() => {
     const edges = (data?.variants.edges ?? []) as { node: Variant }[];
-    return data?.handle === ORI_HANDLE
-      ? edges.filter((edge) => edge.node.sku === ORI_WHITE_SKU)
-      : data?.handle === EFRAT_HANDLE
-        ? edges.filter((edge) => !EFRAT_HIDDEN_SKUS.has(edge.node.sku ?? ""))
-        : data?.handle === LOTUS_HANDLE
-          ? edges.filter((edge) => !LOTUS_HIDDEN_SKUS.has(edge.node.sku ?? ""))
-          : edges;
+    return edges.filter((edge) => isVisibleVariant(data?.handle, edge.node.sku));
   }, [data]);
 
   // Initialize default selected options from the first storefront-visible variant.
@@ -595,10 +582,11 @@ function ProductPage() {
 
   useEffect(() => {
     if (!data) return;
-    const item = data.variants.edges[0]?.node;
+    // First storefront-visible variant, so the reported content_id always exists in the Meta catalog feed.
+    const item = visibleVariantEdges[0]?.node;
     if (!item) return;
     return setProductView([{ variantId: item.id, price: item.price, quantity: 1 }]);
-  }, [data]);
+  }, [data, visibleVariantEdges]);
 
   if (loadingProduct) {
     return (
