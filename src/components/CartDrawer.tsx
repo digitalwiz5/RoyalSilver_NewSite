@@ -64,19 +64,16 @@ export function CartDrawer() {
     if (shippingMethod !== "home") void setShippingMethod("home");
   }, [requiresHomeDelivery, shippingMethod, setShippingMethod]);
 
+  // Checkout opens in the same tab: a background tab looked like the button did nothing.
   const handleCheckout = async () => {
-    const checkoutWindow = window.open("about:blank", "_blank");
-    if (checkoutWindow) checkoutWindow.opener = null;
     setCheckingOut(true);
     try {
       const url = await prepareCheckout();
-      if (!url) { checkoutWindow?.close(); return; }
+      if (!url) return;
       markCheckoutStarted();
-      if (checkoutWindow) checkoutWindow.location.href = url;
-      else window.open(url, "_blank");
-      setOpen(false);
+      window.location.assign(url);
     } catch {
-      checkoutWindow?.close();
+      // prepareCheckout reports its own errors in the drawer
     } finally {
       setCheckingOut(false);
     }
@@ -101,11 +98,15 @@ export function CartDrawer() {
         <SheetHeader>
           <SheetTitle className="font-serif text-2xl tracking-wide">העגלה שלי</SheetTitle>
           <SheetDescription>
-            {totalItems === 0 ? "העגלה ריקה" : `${totalItems} פריטים בעגלה`}
+            {totalItems === 0
+              ? "העגלה ריקה"
+              : totalItems === 1
+                ? "פריט אחד בעגלה"
+                : `${totalItems} פריטים בעגלה`}
           </SheetDescription>
         </SheetHeader>
 
-        <div className="flex flex-col flex-1 pt-6 min-h-0">
+        <div className="flex flex-col flex-1 pt-6 min-h-0 overflow-y-auto">
           {items.length === 0 ? (
             <div className="flex-1 flex items-center justify-center text-muted-foreground">
               <div className="text-center">
@@ -115,7 +116,7 @@ export function CartDrawer() {
             </div>
           ) : (
             <>
-              <div className="flex-1 overflow-y-auto pr-1 min-h-0 space-y-5">
+              <div className="pr-1 space-y-5">
                 {items.map((item) => (
                   <div key={item.variantId} className="flex gap-4 pb-5 border-b border-border">
                     <div className="w-20 h-24 bg-secondary overflow-hidden flex-shrink-0">
@@ -172,7 +173,7 @@ export function CartDrawer() {
                 <CartAddOns onNavigate={() => setOpen(false)} />
               </div>
 
-              <div className="pt-4 border-t border-border space-y-4">
+              <div className="mt-5 pt-4 border-t border-border space-y-4">
                 <div className="space-y-2">
                   <p className="text-xs tracking-widest uppercase text-muted-foreground">קוד קופון</p>
                   {discountApplicable && discountCode ? (
@@ -283,15 +284,17 @@ export function CartDrawer() {
                 </div>
 
 
-                <Button
-                  variant="hero"
-                  size="lg"
-                  className="w-full"
-                  disabled={isLoading || isSyncing || isApplyingDiscount || checkingOut}
-                  onClick={handleCheckout}
-                >
-                  {isLoading || isSyncing || isApplyingDiscount || checkingOut ? <Loader2 className="h-4 w-4 animate-spin" /> : "מעבר לתשלום"}
-                </Button>
+                <div className="sticky bottom-0 -mx-1 px-1 pt-2 pb-1 bg-background">
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="w-full"
+                    disabled={isLoading || isSyncing || isApplyingDiscount || checkingOut}
+                    onClick={handleCheckout}
+                  >
+                    {isLoading || isSyncing || isApplyingDiscount || checkingOut ? <Loader2 className="h-4 w-4 animate-spin" /> : "מעבר לתשלום"}
+                  </Button>
+                </div>
               </div>
             </>
           )}

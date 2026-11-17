@@ -8,6 +8,7 @@ import {
 import { HOME_ONLY_HANDLES } from "@/lib/handles";
 import { trackCommerce } from "@/lib/meta-pixel";
 import { SAFE_MODE } from "@/lib/safe-mode";
+import { toast } from "sonner";
 import { IRIS_CODE, readDiscountCost, singleDiscountCode } from "@/lib/cart-discounts";
 
 
@@ -331,6 +332,7 @@ export const useCartStore = create<CartStore>()(
         const existing = items.find((i) => i.variantId === item.variantId);
         set({ shippingMethod: "home" });
         set({ isLoading: true });
+        let added = false;
         try {
           if (!cartId) {
             const result = await createShopifyCart({ ...item, lineId: null });
@@ -342,6 +344,7 @@ export const useCartStore = create<CartStore>()(
               });
               await pushShippingMethodToShopify(result.cartId, "home");
               trackCommerce("AddToCart", [item]);
+              added = true;
             }
           } else if (existing) {
             const newQty = existing.quantity + item.quantity;
@@ -351,6 +354,7 @@ export const useCartStore = create<CartStore>()(
               const cur = get().items;
               set({ items: cur.map((i) => (i.variantId === item.variantId ? { ...i, quantity: newQty } : i)) });
               trackCommerce("AddToCart", [item]);
+              added = true;
             } else if (result.cartNotFound) clearCart();
           } else {
             const result = await addLineToShopifyCart(cartId, { ...item, lineId: null });
@@ -359,6 +363,7 @@ export const useCartStore = create<CartStore>()(
               set({ items: [...cur, { ...item, lineId: result.lineId ?? null }] });
               await pushShippingMethodToShopify(cartId, "home");
               trackCommerce("AddToCart", [item]);
+              added = true;
             } else if (result.cartNotFound) clearCart();
           }
         } finally {
@@ -368,6 +373,8 @@ export const useCartStore = create<CartStore>()(
             else await get().refreshCartCost();
           }
           set({ isLoading: false });
+          if (added) toast.success("נוסף לסל", { description: item.product.node.title, duration: 2500 });
+          else toast.error("לא הצלחנו להוסיף לסל. נסו שוב.");
         }
       },
 
