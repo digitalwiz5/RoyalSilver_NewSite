@@ -201,7 +201,7 @@ function Home() {
             />
           </div>
           <div>
-            <p className="rs-eyebrow mb-4">הקולקציות שלנו</p>
+            <p className="rs-eyebrow mb-4">לגברים</p>
             <h2 className="font-serif text-4xl md:text-6xl font-light italic mb-8">תכשיטי גברים</h2>
             <nav aria-label="קטגוריות תכשיטי גברים" className="border-t border-border">
               {menCollections.map((collection) => (
