@@ -5,9 +5,23 @@ export const SHOPIFY_API_VERSION = "2026-10";
 // Defaults point at the live store. Override with VITE_SHOPIFY_STORE_DOMAIN / VITE_SHOPIFY_STOREFRONT_TOKEN
 // (e.g. a Shopify development store for checkout testing). Storefront tokens are public, read-scoped tokens.
 const env = (import.meta.env ?? {}) as Record<string, string | undefined>;
-export const SHOPIFY_STORE_PERMANENT_DOMAIN = env.VITE_SHOPIFY_STORE_DOMAIN || "hc2k41-jj.myshopify.com";
+export const SHOPIFY_STORE_PERMANENT_DOMAIN =
+  env.VITE_SHOPIFY_STORE_DOMAIN || "hc2k41-jj.myshopify.com";
 export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
-export const SHOPIFY_STOREFRONT_TOKEN = env.VITE_SHOPIFY_STOREFRONT_TOKEN || "a564c7ce70db2fb2445c493004236901";
+export const SHOPIFY_STOREFRONT_TOKEN =
+  env.VITE_SHOPIFY_STOREFRONT_TOKEN || "a564c7ce70db2fb2445c493004236901";
+/**
+ * The store's primary language is English (EN) in Shopify admin, but the text the owner edits there is Hebrew.
+ * Without this header Shopify picks the language from the visitor's browser and Hebrew browsers receive the
+ * store's separate "Hebrew translation", which still holds old English supplier copy for some products.
+ * Always ask for the primary language so the site shows exactly what is edited in the Shopify product editor.
+ */
+export const SHOPIFY_CONTENT_LANGUAGE = "en";
+export const STOREFRONT_HEADERS = {
+  "Content-Type": "application/json",
+  "X-Shopify-Storefront-Access-Token": SHOPIFY_STOREFRONT_TOKEN,
+  "Accept-Language": SHOPIFY_CONTENT_LANGUAGE,
+};
 
 export interface ShopifyProduct {
   node: {
@@ -51,10 +65,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   }
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Shopify-Storefront-Access-Token": SHOPIFY_STOREFRONT_TOKEN,
-    },
+    headers: STOREFRONT_HEADERS,
     body: JSON.stringify({ query, variables }),
   });
 
@@ -66,7 +77,10 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
   const data = await response.json();
-  if (data.errors) throw new Error(`Shopify error: ${data.errors.map((e: { message: string }) => e.message).join(", ")}`);
+  if (data.errors)
+    throw new Error(
+      `Shopify error: ${data.errors.map((e: { message: string }) => e.message).join(", ")}`,
+    );
   return data;
 }
 

@@ -1,10 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { buildFeedItems, feedXml, type FeedProduct } from "@/lib/meta-feed";
-import {
-  SHOPIFY_API_VERSION,
-  SHOPIFY_STOREFRONT_TOKEN,
-  SHOPIFY_STOREFRONT_URL,
-} from "@/lib/shopify";
+import { SHOPIFY_API_VERSION, SHOPIFY_STOREFRONT_URL, STOREFRONT_HEADERS } from "@/lib/shopify";
 
 const FEED_QUERY = `
   query MetaFeed($after: String) {
@@ -35,10 +31,7 @@ async function fetchAllProducts(): Promise<FeedProduct[]> {
   for (;;) {
     const response = await fetch(SHOPIFY_STOREFRONT_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Shopify-Storefront-Access-Token": SHOPIFY_STOREFRONT_TOKEN,
-      },
+      headers: STOREFRONT_HEADERS,
       body: JSON.stringify({ query: FEED_QUERY, variables: { after } }),
     });
     if (!response.ok) throw new Error(`Shopify ${SHOPIFY_API_VERSION} returned ${response.status}`);
