@@ -114,6 +114,7 @@ export const PRODUCT_BY_HANDLE_QUERY = `
   query GetProductByHandle($handle: String!) {
     productByHandle(handle: $handle) {
       id title description descriptionHtml handle createdAt tags
+      materials: metafield(namespace: "custom", key: "materials") { value }
       priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount currencyCode } }
       images(first: 10) { edges { node { url altText } } }

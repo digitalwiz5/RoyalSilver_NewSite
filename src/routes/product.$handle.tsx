@@ -9,7 +9,7 @@ import { MENS_BRACELETS } from "@/lib/mens-bracelets";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { SHAY_HANDLE, SHAY_IMAGES, SHAY_SUBTITLE, SHAY_SEO, fetchShayProduct, shayImageIndex, shaySelection } from "@/lib/shay";
 import { ShaySelectors } from "@/components/ShaySelectors";
-import { fetchCatalogProduct } from "@/lib/shopify-catalog";
+import { fetchCatalogProduct, materialsLines } from "@/lib/shopify-catalog";
 import { RelatedProducts } from "@/components/RelatedProducts";
 import { exactVariant, variantGalleryImages, variantShownByPrimaryImage } from "@/lib/product-presentation";
 import { setProductView } from "@/lib/meta-pixel";
@@ -1421,12 +1421,14 @@ function ProductPage() {
                       <p>• עיצוב: מגן דוד משובץ עם האות ה׳.</p>
                       <p>• גוון זמין באתר: לבן.</p>
                     </>
-                  ) : (
+                  ) : materialsLines(data).length > 0 ? (
                     <>
-                      {options.filter((option) => option.name !== "Title").map((option) => (
-                        <p key={option.name}>• {option.name}: {option.values.join(" / ")}</p>
+                      {materialsLines(data).map((line) => (
+                        <p key={line}>• {line}</p>
                       ))}
                     </>
+                  ) : (
+                    <p>פרטי החומרים מופיעים בתיאור המוצר.</p>
                   )}
                 </AccordionContent>
               </AccordionItem>

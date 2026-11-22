@@ -1,10 +1,43 @@
-import { PRODUCTS_QUERY, PRODUCT_BY_HANDLE_QUERY, storefrontApiRequest, type ShopifyProduct } from "./shopify";
-interface PageInfo { hasNextPage: boolean; endCursor: string | null }
-export interface Connection<T> { edges: Array<{ node: T }>; pageInfo?: PageInfo }
-export type CatalogProduct = ShopifyProduct["node"] & { descriptionHtml?: string };
+import {
+  PRODUCTS_QUERY,
+  PRODUCT_BY_HANDLE_QUERY,
+  storefrontApiRequest,
+  type ShopifyProduct,
+} from "./shopify";
+interface PageInfo {
+  hasNextPage: boolean;
+  endCursor: string | null;
+}
+export interface Connection<T> {
+  edges: Array<{ node: T }>;
+  pageInfo?: PageInfo;
+}
+export type CatalogProduct = ShopifyProduct["node"] & {
+  descriptionHtml?: string;
+  /** Shopify product metafield custom.materials (list of single-line texts), shown under "חומרים ואיכות". */
+  materials?: { value: string } | null;
+};
+
+/** Lines of the custom.materials metafield; empty when the field is missing or malformed. */
+export function materialsLines(product: object | null | undefined): string[] {
+  const raw = (product as { materials?: { value?: string } | null } | null | undefined)?.materials
+    ?.value;
+  if (!raw) return [];
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed)
+      ? parsed.filter((x): x is string => typeof x === "string" && x.trim() !== "")
+      : [];
+  } catch {
+    return [];
+  }
+}
 
 /** Keep source order, deduplicate identities only, and fail closed on a broken cursor. */
-export async function collectPages<T>(read: (after: string | null) => Promise<Connection<T>>, identity: (node: T) => string) {
+export async function collectPages<T>(
+  read: (after: string | null) => Promise<Connection<T>>,
+  identity: (node: T) => string,
+) {
   const result: Array<{ node: T }> = [];
   const ids = new Set<string>();
   const cursors = new Set<string>();
@@ -13,34 +46,44 @@ export async function collectPages<T>(read: (after: string | null) => Promise<Co
     const page = await read(after);
     for (const edge of page.edges) {
       const id = identity(edge.node);
-      if (!ids.has(id)) { result.push(edge); ids.add(id); }
+      if (!ids.has(id)) {
+        result.push(edge);
+        ids.add(id);
+      }
     }
     if (!page.pageInfo?.hasNextPage) return result;
     const next = page.pageInfo.endCursor;
-    if (!next || cursors.has(next)) throw new Error("Shopify returned an invalid pagination cursor");
+    if (!next || cursors.has(next))
+      throw new Error("Shopify returned an invalid pagination cursor");
     cursors.add(next);
     after = next;
   }
 }
 
-const CATALOG_QUERY = PRODUCTS_QUERY
-  .replace("$query: String)", "$query: String, $after: String)")
-  .replace("query: $query) {", "query: $query, after: $after, sortKey: CREATED_AT, reverse: true) {\n pageInfo { hasNextPage endCursor }")
+const CATALOG_QUERY = PRODUCTS_QUERY.replace("$query: String)", "$query: String, $after: String)")
+  .replace(
+    "query: $query) {",
+    "query: $query, after: $after, sortKey: CREATED_AT, reverse: true) {\n pageInfo { hasNextPage endCursor }",
+  )
   .replace("variants(first: 10)", "variants(first: 250)");
 
 export async function fetchCategoryProducts(query: string): Promise<ShopifyProduct[]> {
-  const products = await collectPages(async (after) => {
-    const response = await storefrontApiRequest(CATALOG_QUERY, { first: 50, query, after });
-    const page = response?.data?.products as Connection<CatalogProduct> | undefined;
-    if (!page) throw new Error("Shopify category data unavailable");
-    return page;
-  }, (node) => node.id);
+  const products = await collectPages(
+    async (after) => {
+      const response = await storefrontApiRequest(CATALOG_QUERY, { first: 50, query, after });
+      const page = response?.data?.products as Connection<CatalogProduct> | undefined;
+      if (!page) throw new Error("Shopify category data unavailable");
+      return page;
+    },
+    (node) => node.id,
+  );
   return products;
 }
 
-const DETAIL_QUERY = PRODUCT_BY_HANDLE_QUERY
-  .replace("images(first: 10) {", "images(first: 100) { pageInfo { hasNextPage endCursor }")
-  .replace("variants(first: 20) {", "variants(first: 100) { pageInfo { hasNextPage endCursor }");
+const DETAIL_QUERY = PRODUCT_BY_HANDLE_QUERY.replace(
+  "images(first: 10) {",
+  "images(first: 100) { pageInfo { hasNextPage endCursor }",
+).replace("variants(first: 20) {", "variants(first: 100) { pageInfo { hasNextPage endCursor }");
 const MORE_IMAGES = `query ProductImages($handle: String!, $after: String) {
   productByHandle(handle: $handle) { images(first: 100, after: $after) {
     pageInfo { hasNextPage endCursor } edges { node { url altText } }
@@ -57,12 +100,19 @@ const MORE_VARIANTS = `query ProductVariants($handle: String!, $after: String) {
 export async function fetchCatalogProduct(handle: string): Promise<CatalogProduct | null> {
   const response = await storefrontApiRequest(DETAIL_QUERY, { handle });
   if (!response) throw new Error("Shopify product data unavailable");
-  const product = response.data?.productByHandle as (CatalogProduct & {
-    images: Connection<{ url: string; altText: string | null }>;
-    variants: Connection<CatalogProduct["variants"]["edges"][number]["node"]>;
-  }) | null;
+  const product = response.data?.productByHandle as
+    | (CatalogProduct & {
+        images: Connection<{ url: string; altText: string | null }>;
+        variants: Connection<CatalogProduct["variants"]["edges"][number]["node"]>;
+      })
+    | null;
   if (!product) return null;
-  async function complete<T>(first: Connection<T>, query: string, field: "images" | "variants", id: (node: T) => string) {
+  async function complete<T>(
+    first: Connection<T>,
+    query: string,
+    field: "images" | "variants",
+    id: (node: T) => string,
+  ) {
     return collectPages<T>(async (after) => {
       if (after === null) return first;
       const next = await storefrontApiRequest(query, { handle, after });
