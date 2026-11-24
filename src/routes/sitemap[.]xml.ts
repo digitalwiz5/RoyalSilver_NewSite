@@ -41,7 +41,7 @@ async function fetchProductHandles(): Promise<ProductEdge[]> {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Shopify-Storefront-Access-Token": process.env["SHOPIFY_STOREFRONT_TOKEN"] ?? "a564c7ce70db2fb2445c493004236901",
+          "X-Shopify-Storefront-Access-Token": process.env["SHOPIFY_STOREFRONT_TOKEN"] ?? "3f130cca14cb892bb35e780bc7dd87d9",
         },
         body: JSON.stringify({ query: PRODUCT_HANDLES_QUERY, variables: { first: 100 } }),
       },

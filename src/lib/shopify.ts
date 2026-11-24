@@ -10,8 +10,12 @@ export const SHOPIFY_STORE_PERMANENT_DOMAIN =
 /** Customer-facing checkout host: connected to Shopify in Settings → Domains, CNAME to shops.myshopify.com. */
 export const SHOPIFY_CHECKOUT_DOMAIN = "checkout.royalsilver.net";
 export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
+/**
+ * Public token of the "Royal Silver Headless" sales channel. The site sees only products published to
+ * that channel, so a new product must have "Royal Silver Headless" ticked under Sales channels.
+ */
 export const SHOPIFY_STOREFRONT_TOKEN =
-  env.VITE_SHOPIFY_STOREFRONT_TOKEN || "a564c7ce70db2fb2445c493004236901";
+  env.VITE_SHOPIFY_STOREFRONT_TOKEN || "3f130cca14cb892bb35e780bc7dd87d9";
 /**
  * The store's primary language is English (EN) in Shopify admin, but the text the owner edits there is Hebrew.
  * Without this header Shopify picks the language from the visitor's browser and Hebrew browsers receive the
