@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import {
   storefrontApiRequest,
-  SHOPIFY_STORE_PERMANENT_DOMAIN,
+  SHOPIFY_CHECKOUT_DOMAIN,
   type ShopifyProduct,
 } from "@/lib/shopify";
 import { HOME_ONLY_HANDLES } from "@/lib/handles";
@@ -159,9 +159,9 @@ const CART_LINES_REMOVE_MUTATION = `
 function formatCheckoutUrl(checkoutUrl: string): string {
   try {
     const url = new URL(checkoutUrl);
-    // The custom domain (royalsilver.net) points to this storefront, not to
-    // Shopify's storefront, so checkout must run on the myshopify domain.
-    url.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
+    // royalsilver.net/www point to this storefront, not to Shopify, so checkout runs on the
+    // Shopify-connected subdomain checkout.royalsilver.net (Shopify primary domain since 2026-11-24).
+    url.host = SHOPIFY_CHECKOUT_DOMAIN;
     url.protocol = "https:";
     url.searchParams.set("channel", "online_store");
     return url.toString();
