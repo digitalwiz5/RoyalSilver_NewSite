@@ -1,5 +1,6 @@
 import { advertisingAllowed, readConsent } from "./advertising-consent";
 import { NO_TRACKING } from "./safe-mode";
+import { gaCommerce, gaGrant, gaPageView, gaRevoke } from "./google-analytics";
 export const META_PIXEL_ID = "2901339290228652";
 type PixelArgs = unknown[];
 interface PixelFunction {
@@ -57,6 +58,7 @@ export function updatePixelConsent(region: string | null) {
       if (window.fbq?.queue) window.fbq.queue = window.fbq.queue.filter(args => args[0] !== "track" && args[0] !== "trackCustom");
       dispatch("consent", "revoke");
     }
+    gaRevoke();
     granted = false;
     return;
   }
@@ -83,6 +85,7 @@ export function updatePixelConsent(region: string | null) {
   }
   const newlyGranted = !granted;
   granted = true;
+  gaGrant();
   dispatch("consent", "grant");
   if (newlyGranted) { lastPage = null; lastView = null; }
   trackCurrentPage();
@@ -94,6 +97,7 @@ export function trackCurrentPage() {
   if (lastPage !== path) {
     lastPage = path; lastView = null;
     dispatch("track", "PageView", {}, { eventID: crypto.randomUUID() });
+    gaPageView();
   }
   if (view?.path === path && lastView !== path) {
     lastView = path;
@@ -109,5 +113,6 @@ export function trackCommerce(event: CommerceEvent, items: Item[]) {
   try {
     if (!granted || !permission() || !items.length) return;
     dispatch("track", event, commerceParameters(items), { eventID: crypto.randomUUID() });
+    gaCommerce(event, items);
   } catch { /* Advertising must never interrupt checkout or cart updates. */ }
 }

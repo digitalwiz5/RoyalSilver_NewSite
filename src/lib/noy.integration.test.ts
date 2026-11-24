@@ -4,7 +4,7 @@ import { PRETTY_TO_REAL_HANDLE } from "./handles";
 import { SHOPIFY_STOREFRONT_URL, SHOPIFY_STOREFRONT_TOKEN } from "./shopify";
 
 describe("Existing Noy set commerce preservation", () => {
-  it("keeps the existing product, variant and 399 ILS price", async () => {
+  it("keeps the existing product, variant and 229 ILS price (lowered from 399 on 2026-11-23 by owner request)", async () => {
     const response = await fetch(SHOPIFY_STOREFRONT_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-Shopify-Storefront-Access-Token": SHOPIFY_STOREFRONT_TOKEN },
@@ -19,7 +19,7 @@ describe("Existing Noy set commerce preservation", () => {
     const variant = product.variants.edges[0].node;
     assert.equal(variant.id, "gid://shopify/ProductVariant/48479508496605");
     assert.equal(variant.sku, null);
-    assert.equal(Number(variant.price.amount), 399);
+    assert.equal(Number(variant.price.amount), 229);
     assert.equal(variant.price.currencyCode, "ILS");
   });
 });
