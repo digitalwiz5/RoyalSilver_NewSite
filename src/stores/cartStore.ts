@@ -27,7 +27,7 @@ export interface CartItem {
 export type ShippingMethod = "home";
 
 // Digital items with requires_shipping=false in Shopify (no shipping charged at checkout).
-export const NO_SHIPPING_HANDLES: string[] = ["מוצר-בדיקה"];
+export const NO_SHIPPING_HANDLES: string[] = ["מוצר-בדיקה", "test-product"];
 
 export const SHIPPING_OPTIONS: Record<
   ShippingMethod,
