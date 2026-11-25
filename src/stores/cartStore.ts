@@ -156,9 +156,15 @@ const CART_LINES_REMOVE_MUTATION = `
     cartLinesRemove(cartId: $cartId, lineIds: $lineIds) { cart { id } userErrors { field message } }
   }`;
 
-function formatCheckoutUrl(checkoutUrl: string): string {
+/**
+ * Hebrew is the shop's only (primary) language, so its checkout pages have no language folder:
+ * checkout.royalsilver.net/he/cart/c/... is a Shopify 404 that bounces the customer to the home page.
+ * Drop any language folder in front of /cart/ or /checkouts/; Shopify still shows checkout in Hebrew.
+ */
+export function formatCheckoutUrl(checkoutUrl: string): string {
   try {
     const url = new URL(checkoutUrl);
+    url.pathname = url.pathname.replace(/^\/[a-z]{2}(?:-[a-z]{2,4})?(?=\/(?:cart|checkouts)\/)/i, "");
     // royalsilver.net/www point to this storefront, not to Shopify, so checkout runs on the
     // Shopify-connected subdomain checkout.royalsilver.net (Shopify primary domain since 2026-11-24).
     url.host = SHOPIFY_CHECKOUT_DOMAIN;
