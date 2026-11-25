@@ -161,6 +161,10 @@ function formatCheckoutUrl(checkoutUrl: string): string {
     // The custom domain (royalsilver.net) points to this storefront, not to
     // Shopify's storefront, so checkout must run on the myshopify domain.
     url.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
+    // Shopify may return a locale-prefixed path (/he/cart/c/...). Locale
+    // subfolders are not served on the myshopify domain, so that path 404s and
+    // buyers bounce back to the homepage. Checkout picks the language itself.
+    url.pathname = url.pathname.replace(/^\/[a-z]{2}(?:-[a-z]{2})?(?=\/cart\/)/i, "");
     url.protocol = "https:";
     url.searchParams.set("channel", "online_store");
     return url.toString();
